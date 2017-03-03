@@ -47,4 +47,5 @@
 		<aop:pointcut expression="execution(* org.crm.service.*.*(..))" id="pointCuter"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCuter"/>
 	</aop:config>
+	
 </beans>
