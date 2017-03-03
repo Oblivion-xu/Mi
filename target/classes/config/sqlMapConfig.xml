@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<typeAlias type="org.bbs.pojo.BbsReply" alias="bbsReply"/>
+		<typeAlias type="org.bbs.pojo.BbsUser" alias="bbsUser"/>
+		<typeAlias type="org.bbs.pojo.BbsTopic" alias="bbsTopic"/>
+		<typeAlias type="org.bbs.pojo.Pager" alias="pager"/>
+		<typeAlias type="java.util.HashMap" alias="conditionMap"/>
+	</typeAliases>
+</configuration>

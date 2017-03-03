@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.bbs.dao.BbsUserMapper">
+
+	<!-- 登录 -->
+	<select id="login" parameterType="bbsUser" resultType="bbsUser">
+		select * from bbs_user where nickname = #{nickname} and password = #{password}
+	</select>
+	
+	<!-- 注册 -->
+	<select id="reg" parameterType="java.lang.String">
+		insert into bbs_user values(default,#{username},#{nickname},#{password},1)
+	</select>
+	
+	<!-- id查找 -->
+	<select id="findById" parameterType="java.lang.Integer" resultType="bbsUser">
+		select * from bbs_user where id = #{id}
+	</select>
+	
+	<!-- id查找 -->
+	<select id="findByNickName" parameterType="String" resultType="bbsUser">
+		select * from bbs_user where nickname = '${_parameter}'
+	</select>
+	
+	<!-- 查找全部 -->
+	<select id="list" resultType="String">
+		select Lower(nickname) from bbs_user
+	</select>
+	
+</mapper>

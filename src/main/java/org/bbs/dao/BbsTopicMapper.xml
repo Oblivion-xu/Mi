@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.bbs.dao.BbsTopicMapper" >
+ 	
+ 	<select id="findByUid" parameterType="Integer" resultType="bbsUser">
+ 		select * from bbs_user where id = #{uid}
+ 	</select>
+ 	
+ 	<select id="findByTid" parameterType="Integer" resultType="bbsReply">
+ 		select * from bbs_reply where tid = #{id}
+ 	</select>
+ 	
+ 	<resultMap type="bbsTopic" id="topicMap">
+ 		<id property="id" column="id"/>
+ 		<result column="topic_title" property="topicTitle"/>
+ 		<result column="topic_content" property="topicContent"/>
+ 		<result column="topic_time" property="topicTime"/>
+ 		<association property="bbsUser" column="uid" select="findByUid"/>
+ 		<collection property="replys" column="id" select="findByTid"/>
+ 	</resultMap>
+ 	
+ 	<!-- 添加 -->
+ 	<insert id="addTopic" parameterType="bbsTopic">
+ 		insert into bbs_topic values(default,#{topicTitle},#{topicContent},default,#{bbsUser.id})
+ 	</insert>
+ 	
+ 	<!-- 删除 -->
+ 	<delete id="delTopic" parameterType="java.lang.Integer">
+ 		delete from bbs_topic where id=#{id}
+ 	</delete>
+ 	
+ 	<!-- id查找 -->
+ 	<select id="findById" parameterType="java.lang.Integer" resultMap="topicMap">
+ 		select * from bbs_topic where id=#{id}
+ 	</select>
+ 	
+ 	<!-- 获取带分页的全部数据 -->
+ 	<select id="list" parameterType="conditionMap" resultMap="topicMap">
+ 		select * from bbs_topic limit #{start},#{size}
+ 	</select>
+ 	
+ 	<!-- 获取总记录 -->
+ 	<select id="getCount" resultType="java.lang.Integer">
+ 		select count(*) from bbs_topic
+ 	</select>
+ 	
+</mapper>

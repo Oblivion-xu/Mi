@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.bbs.dao.BbsReplyMapper" >
+	
+	<select id="findByUid" parameterType="Integer" resultType="bbsUser">
+		select * from bbs_user where id = #{uid}
+	</select>
+	
+	<select id="findByTid" parameterType="Integer" resultMap="topicMap">
+		select * from bbs_topic where id = #{tid}
+	</select>
+	
+	<resultMap type="bbsTopic" id="topicMap">
+ 		<id property="id" column="id"/>
+ 		<result column="topic_title" property="topicTitle"/>
+ 		<result column="topic_content" property="topicContent"/>
+ 		<result column="topic_time" property="topicTime"/>
+ 	</resultMap>
+ 	
+	<resultMap type="bbsReply" id="replyMap">
+		<id property="replyId" column="id"/>
+		<result property="replyTime" column="reply_time"/>
+		<result property="replyContent" column="reply_content"/>
+		<association property="bbsUser" column="uid" select="findByUid"/>
+		<association property="topic" column="tid" select="findByTid"/>	
+	</resultMap>
+	
+	<!-- 添加 -->
+	<insert id="addReply" parameterType="bbsReply">
+		insert into bbs_reply values(default,#{topic.id},#{bbsUser.id},default,#{replyContent})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delReply" parameterType="Integer">
+		delete from bbs_reply where id=#{id}
+	</delete>
+	
+	<!-- 获取回复信息 -->
+	<select id="list" parameterType="conditionMap" resultMap="replyMap">
+		select * from bbs_reply where tid = #{id} limit #{start},#{size}
+	</select>
+	
+	<!-- 获取回复信息条数 -->
+	<select id="getCount" parameterType="Integer" resultType="Integer">
+		select count(*) from bbs_reply where tid = #{id}
+	</select>
+</mapper>
