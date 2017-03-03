@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 开启开发模式：可以提示详细错误信息 -->
+	<constant name="struts.devMode" value="true"/>
+	<!-- 将对象叫给Spring来管理 -->
+	<constant name="struts.objectFactory" value="spring"/>
+	
+	<package name="struts" extends="struts-default" namespace="/user">
+		<action name="*" class="userAction" method="{1}">
+			<result name="success" type="redirect">/jsp/index.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+	</package>
+</struts>    
